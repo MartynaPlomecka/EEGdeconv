@@ -2,6 +2,7 @@
 library(lme4)
 library(rlist)
 library(ggplot2)
+library(gridExtra)
 data <- read.csv('myData.csv')
 
 model = list()
@@ -28,7 +29,7 @@ list.save(allsummary, 'lmerallsummaries.rdata')
 ### bootstrap to get reliable and stable estimates
 boot = list()
 for (i in 1:600){
-  boot[[i]] = confint( model[[i]], nsim=1000, method='boot') 
+  boot[[i]] = confint( model[[i]], nsim=100, method='boot') 
 }
 
 
@@ -57,40 +58,4 @@ write.csv(inter,'inter.csv')
 #############
 #############
 #############
-age <- read.csv('age.csv')
-
-names(age) <- c("X", "A", "A")
-age_binned <- rbind(age[, c(1,2)], age[, c(1,3)])
-
-ggplot(age_binned, aes(X, A)) +
-  geom_point(size = .8, color = "royalblue3") +
-  geom_line(aes(group = X), alpha = 0.35) +
-  theme_light()
-
-
-#############
-#############
-#############
-cond <- read.csv('cond.csv')
-
-names(cond) <- c("X", "A", "A")
-cond_binned <- rbind(cond[, c(1,2)], cond[, c(1,3)])
-
-ggplot(cond_binned, aes(X, A)) +
-  geom_point(size = .8, color = "royalblue3") +
-  geom_line(aes(group = X), alpha = 0.35) +
-  theme_light()
-
-#############
-#############
-#############
-
-inter <- read.csv('inter.csv')
-
-names(inter) <- c("X", "A", "A")
-inter_binned <- rbind(inter[, c(1,2)], inter[, c(1,3)])
-
-ggplot(inter_binned, aes(X, A)) +
-  geom_point(size = .8, color = "royalblue3") +
-  geom_line(aes(group = X), alpha = 0.35) +
-  theme_light()
+grid.arrange(a, c,i,  nrow = 1)
