@@ -1,10 +1,12 @@
-# summary(mod300)
 library(lme4)
 library(rlist)
 library(ggplot2)
+library(gridExtra)
+
 data <- read.csv('myData.csv')
 data$cond = as.factor(data$cond)
 data$age = as.factor(data$age)
+
 model = list()
 for (i in 1:600)
 {#300 ms before and 100 after the saccade
@@ -12,18 +14,18 @@ for (i in 1:600)
   summary(model[[i]])
 }
 
-#STAT SUMMARIES
-allsummary = list()
-for (i in 1:600){
-  allsummary[[i]] = summary(model[[i]])
-}
+# #STAT SUMMARIES
+# allsummary = list()
+# for (i in 1:600){
+#   allsummary[[i]] = summary(model[[i]])
+# }
+# 
+# for (i in 1:600){
+#   print(allsummary[[i]])
+# }
 
-for (i in 1:600){
-  print(allsummary[[i]])
-}
-
-list.save(allsummary, 'lmerallsummaries.rds')
-list.save(allsummary, 'lmerallsummaries.rdata')
+# list.save(allsummary, 'lmerallsummaries.rds')
+# list.save(allsummary, 'lmerallsummaries.rdata')
 
 
 ### bootstrap to get reliable and stable estimates
@@ -56,7 +58,7 @@ write.csv(inter,'inter.csv')
 
 
 #############
-#############
+#############PLOT
 #############
 age <- read.csv('age.csv')
 
@@ -119,8 +121,6 @@ i = ggplot(inter_binned, aes(X, A)) +
   theme_light()
 
 
-
-####
 
 #############
 #############
