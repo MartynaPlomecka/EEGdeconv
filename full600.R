@@ -9,7 +9,7 @@ data$age = as.factor(data$age)
 
 model = list()
 for (i in 1:600)
-{#300 ms before and 100 after the saccade
+{#600 ms (300timepoints) before and 600 after the saccade
   model[[i]] <- eval(parse(text=paste("lmer(X",i," ~ 1 + cond*age+ (1|Var1), data=data)", sep="")))
   summary(model[[i]])
 }
