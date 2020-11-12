@@ -2,7 +2,10 @@
 library(lme4)
 library(rlist)
 library(ggplot2)
-data <- read.csv('bcstimlockedmyData.csv')
+library(gridExtra)
+
+setwd("~/dev/EEGdeconv/data")
+data <- read.csv('100bcstimlockedmyData.csv')
 data$cond = as.factor(data$cond)
 data$age = as.factor(data$age)
 model = list()
@@ -12,15 +15,15 @@ for (i in 1:600)
   summary(model[[i]])
 }
 
-#STAT SUMMARIES
-allsummary = list()
-for (i in 1:600){
-  allsummary[[i]] = summary(model[[i]])
-}
-
-for (i in 1:600){
-  print(allsummary[[i]])
-}
+# #STAT SUMMARIES
+# allsummary = list()
+# for (i in 1:600){
+#   allsummary[[i]] = summary(model[[i]])
+# }
+# 
+# for (i in 1:600){
+#   print(allsummary[[i]])
+# }
 
 
 
@@ -37,27 +40,27 @@ cond = data.frame(A=numeric(0),B=numeric(0))
 for (i in 1:600){
   cond[i,] = boot[[i]][4,]
 }
-write.csv(cond,'scond.csv')
+write.csv(cond,'bcstimcond.csv')
 
 ####AGE
 age = data.frame(A=numeric(0),B=numeric(0))
 for (i in 1:600){
   age[i,] = boot[[i]][5,]
 }
-write.csv(age,'sage.csv')
+write.csv(age,'bcstimage.csv')
 
 inter = data.frame(A=numeric(0),B=numeric(0))
 for (i in 1:600){
   inter[i,] = boot[[i]][6,]
 }
-write.csv(inter,'sinter.csv')
+write.csv(inter,'bcstiminter.csv')
 ###########################################
 
 
 #############
 #############
 #############
-age <- read.csv('sage.csv')
+age <- read.csv('bcstimage.csv')
 
 names(age) <- c("X", "A", "A")
 age_binned <- rbind(age[, c(1,2)], age[, c(1,3)])
@@ -78,7 +81,7 @@ a = ggplot(age_binned, aes(X, A)) +
 #############
 #############
 #############
-cond <- read.csv('scond.csv')
+cond <- read.csv('bcstimcond.csv')
 
 names(cond) <- c("X", "A", "A")
 cond_binned <- rbind(cond[, c(1,2)], cond[, c(1,3)])
@@ -101,7 +104,7 @@ c = ggplot(cond_binned, aes(X, A)) +
 ###############################
 ###############################
 
-inter <- read.csv('sinter.csv')
+inter <- read.csv('bcstiminter.csv')
 
 names(inter) <- c("X", "A", "A")
 inter_binned <- rbind(inter[, c(1,2)], inter[, c(1,3)])
