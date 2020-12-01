@@ -31,7 +31,7 @@ for (i in 1:600)
 ### bootstrap to get reliable and stable estimates
 boot = list()
 for (i in 1:600){
-  boot[[i]] = confint( model[[i]], nsim=100, method='boot') 
+  boot[[i]] = confint( model[[i]], nsim=100, method='boot',level = 0.9895) 
 }
 
 

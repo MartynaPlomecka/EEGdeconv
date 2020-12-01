@@ -1,4 +1,6 @@
 library(brms)
+install.packages("rlist")
+library(rlist)
 # Upload the csv file
 data <- read.csv('myData.csv')
 data$Var1   #120 levels, 60 old, 60 yng
@@ -15,11 +17,27 @@ summary(mod[[i]])
 }
 
 
+for (i in 150:350){
+  print(allsum[[i]])
+}
+allsum = list()
+for (i in 150:350){
+  allsum[[i]] = summary(mod[[i]])
+}
 
-pp_check(beta)
-fitted(beta)
-summary(beta)
-predict(beta)
+
+
+list.save(allsum, 'allsummaries.rds')
+list.save(allsum, 'allsummaries.rdata')
+
+
+#allsum[[160]][14]
+
+##############################################################################
+# pp_check(beta)
+# fitted(beta)
+# summary(beta)
+# predict(beta)
 # Function fitter predict mean values of the response distribution 
 #(i.e., the 'regression line') for a fitted model. 
 #Can be performed for the data used to fit the model (posterior predictive checks) 

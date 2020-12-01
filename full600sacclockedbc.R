@@ -2,7 +2,7 @@
 library(lme4)
 library(rlist)
 library(ggplot2)
-
+library(gridExtra)
 
 setwd("~/dev/EEGdeconv/data")
 data <- read.csv('100bcsacclockedmyData.csv')
@@ -31,7 +31,7 @@ for (i in 1:600)
 ### bootstrap to get reliable and stable esaccates
 boot = list()
 for (i in 1:600){
-  boot[[i]] = confint( model[[i]], nsim=100, method='boot') 
+  boot[[i]] = confint( model[[i]], nsim=100, method='boot', level = 0.9895) 
 }
 
 
